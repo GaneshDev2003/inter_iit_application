@@ -1,0 +1,7 @@
+{% include 'base.html' %}
+{% block content %}
+{% for file in files%}
+<a href="{% url 'file_details' file.id %}">{{file.file_name}}</a>
+<br>
+{% endfor %}
+{% endblock content%}

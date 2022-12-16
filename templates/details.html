@@ -1,0 +1,60 @@
+{%extends 'base.html' %}
+{%block scripts%}
+<script>
+    // jquery function
+    $(document).ready(function(){
+        
+        console.log("{{plot_data}}");
+        var label = [];
+        
+        for(var i = 0;i<100;i++) label.push(i)
+        console.log(label);
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: label ,//loop through queryset, 
+                    datasets: [{
+                        label: 'Energy Flux',
+                        data: JSON.parse("{{plot_data}}"),
+                        backgroundColor: 
+                            'rgba(255, 99, 132, 0.2)',
+                        borderColor: 
+                            'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive :true,
+                    scales: {
+                        y: {
+                            title : {
+                                text : "Energy Flux",
+                            },
+                            beginAtZero: true
+                        }
+                    }
+                }
+    });
+        });
+</script>
+{%endblock scripts%}
+{%block content%}
+<style>
+    .chart-wrapper{
+    display: inline-block;
+    margin: 0 auto;
+    width: 50%;
+    }
+</style>
+<div class = "chart-wrapper ">
+    <canvas id = "myChart"> </canvas>
+</div>
+{%for burst in bursts %}
+<p>burst</p>
+<div>
+    <p>burst</p>
+    <p>{{burst.type_of_burst}}</p>
+</div>
+{% endfor %}
+{%endblock content%}
